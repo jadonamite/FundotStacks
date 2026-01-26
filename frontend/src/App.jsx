@@ -168,7 +168,7 @@ function App() {
                   </div>
                 </div>
                 <div className="mt-8 pt-6 border-t border-secondary-200 dark:border-secondary-800 text-center text-sm text-secondary-600 dark:text-secondary-400">
-                  © 2025 FundotStacks. Built on Stacks, secured by Bitcoin.
+                  © 2026 FundotStacks. Built on Stacks, secured by Bitcoin.
                 </div>
               </div>
             </footer>
