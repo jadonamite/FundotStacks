@@ -5,13 +5,35 @@
 
 import { create } from 'zustand';
 
+const FILTER_STORAGE_KEY = 'fundot-campaign-filters';
+
+const readFilters = () => {
+    if (typeof window === 'undefined') {
+        return {
+            status: 'all',
+            sortBy: 'recent'
+        };
+    }
+
+    try {
+        const stored = window.localStorage.getItem(FILTER_STORAGE_KEY);
+        if (!stored) return { status: 'all', sortBy: 'recent' };
+        return JSON.parse(stored);
+    } catch (err) {
+        console.warn('Failed to parse campaign filters from storage', err);
+        return { status: 'all', sortBy: 'recent' };
+    }
+};
+
+const writeFilters = (filters) => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(filters));
+};
+
 export const useCampaignStore = create((set, get) => ({
     campaigns: [],
     selectedCampaign: null,
-    filters: {
-        status: 'all',
-        sortBy: 'recent'
-    },
+    filters: readFilters(),
 
     setCampaigns: (campaigns) => set({ campaigns }),
 
@@ -26,7 +48,11 @@ export const useCampaignStore = create((set, get) => ({
         )
     })),
 
-    setFilters: (filters) => set({ filters: { ...get().filters, ...filters } }),
+    setFilters: (filters) => {
+        const next = { ...get().filters, ...filters };
+        writeFilters(next);
+        set({ filters: next });
+    },
 
     getFilteredCampaigns: () => {
         const { campaigns, filters } = get();
