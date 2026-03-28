@@ -10,9 +10,14 @@ export function CampaignCard({ campaign }) {
     const progress = calculateProgress(campaign.raisedAmount, campaign.goalAmount);
     const statusColor = getStatusColor(campaign.status);
     const statusLabel = getStatusLabel(campaign.status);
+    const label = `View details for ${campaign.title || 'this campaign'}`;
 
     return (
-        <Link to={`/campaign/${campaign.id}`}>
+        <Link
+            to={`/campaign/${campaign.id}`}
+            aria-label={label}
+            title={label}
+        >
             <div className="card card-hover p-6 h-full flex flex-col">
                 {/* Status Badge */}
                 <div className="flex items-center justify-between mb-4">
