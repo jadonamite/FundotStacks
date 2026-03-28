@@ -21,7 +21,7 @@ export function LoadingSpinner({ size = 'md', text = null }) {
                 aria-label={label}
             >
                 <div className="absolute inset-0 rounded-full border-4 border-primary-200 dark:border-primary-900"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-primary-500 border-t-transparent animate-spin"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-primary-500 border-t-transparent motion-safe:animate-spin"></div>
                 <span className="sr-only">{label}</span>
             </div>
             {text && (
