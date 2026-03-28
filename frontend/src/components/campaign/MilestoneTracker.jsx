@@ -8,7 +8,7 @@ export function MilestoneTracker({ milestones = [], campaignId }) {
         return (
             <div className="card p-6 text-center">
                 <p className="text-secondary-600 dark:text-secondary-400">
-                    No milestones defined for this campaign
+                    No milestone records have been published for this campaign yet.
                 </p>
             </div>
         );
@@ -17,6 +17,9 @@ export function MilestoneTracker({ milestones = [], campaignId }) {
     return (
         <div className="card p-6">
             <h3 className="text-lg font-bold mb-4">Campaign Milestones</h3>
+            <p className="mb-6 text-sm text-secondary-600 dark:text-secondary-400">
+                These entries are visible progress markers for FundotStacks v1 and do not custody or release funds.
+            </p>
             <div className="space-y-4">
                 {milestones.map((milestone, index) => (
                     <div key={index} className="relative pl-8 pb-8 last:pb-0">
