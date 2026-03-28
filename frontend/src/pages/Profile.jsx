@@ -6,20 +6,27 @@
 import { useParams } from 'react-router-dom';
 import { useCampaigns } from '../hooks/useCampaigns.js';
 import { CampaignCard } from '../components/campaign/CampaignCard.jsx';
-import { LoadingSpinner } from '../components/common/LoadingSpinner.jsx';
+import { CampaignSkeletonCard } from '../components/campaign/CampaignSkeletonCard.jsx';
+import { ErrorAlert } from '../components/common/ErrorAlert.jsx';
 import { truncateAddress } from '../utils/helpers.js';
 
 export function Profile() {
     const { address } = useParams();
-    const { data: campaigns, isLoading } = useCampaigns();
+    const { data: campaigns, isLoading, isError, refetch } = useCampaigns();
 
     // Filter campaigns by creator address
     const userCampaigns = campaigns?.filter(c => c.creator === address) || [];
 
     if (isLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <LoadingSpinner size="lg" text="Loading profile..." />
+            <div className="min-h-screen py-12">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {Array.from({ length: 4 }, (_, index) => (
+                            <CampaignSkeletonCard key={`profile-skeleton-${index}`} />
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }
@@ -67,11 +74,20 @@ export function Profile() {
                 </div>
 
                 {/* Campaigns */}
-                <div className="mb-6">
-                    <h2>Campaigns by This Creator</h2>
-                </div>
+            <div className="mb-6">
+                <h2>Campaigns by This Creator</h2>
+            </div>
 
-                {userCampaigns.length > 0 ? (
+            {isError && (
+                <div className="mb-6">
+                    <ErrorAlert
+                        message="Unable to load campaigns for this creator. Try again."
+                        onRetry={refetch}
+                    />
+                </div>
+            )}
+
+            {userCampaigns.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {userCampaigns.map((campaign) => (
                             <CampaignCard key={campaign.id} campaign={campaign} />
