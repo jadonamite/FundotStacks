@@ -85,9 +85,12 @@ export function CampaignDetail() {
                                 <span className={`px-3 py-1 rounded-full text-xs font-semibold text-white ${statusColor}`}>
                                     {statusLabel}
                                 </span>
+                                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-secondary-100 dark:bg-secondary-900 text-secondary-700 dark:text-secondary-300">
+                                    V1 no-custody
+                                </span>
                                 {campaign.milestonesEnabled && (
                                     <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300">
-                                        Milestone Funding
+                                        Milestone Tracking
                                     </span>
                                 )}
                             </div>
@@ -150,6 +153,15 @@ export function CampaignDetail() {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="card p-6 bg-secondary-50 dark:bg-secondary-900">
+                            <h3 className="text-lg font-bold mb-3">How FundotStacks v1 Works</h3>
+                            <div className="space-y-2 text-sm text-secondary-700 dark:text-secondary-300">
+                                <p>Backers send STX directly to the creator when they fund a campaign.</p>
+                                <p>Campaign, contribution, refund, milestone, and reward data are displayed as on-chain records for transparency.</p>
+                                <p>Milestone updates and refunds are coordinated manually in this release rather than enforced through contract custody.</p>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Sidebar */}
@@ -186,6 +198,10 @@ export function CampaignDetail() {
                                                         required
                                                     />
                                                 </div>
+
+                                                <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                                                    Your wallet will send this STX directly to the campaign creator.
+                                                </p>
 
                                                 {error && (
                                                     <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-sm text-red-600 dark:text-red-400">
@@ -244,7 +260,7 @@ export function CampaignDetail() {
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="text-xl font-bold">Milestone Progress</h2>
                         <span className="text-sm text-secondary-500 dark:text-secondary-400">
-                            Managed by the Milestone Manager contract
+                            Visible progress records from the Milestone Manager contract
                         </span>
                     </div>
 
