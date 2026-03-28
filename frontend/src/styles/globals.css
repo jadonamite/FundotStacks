@@ -3,13 +3,29 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply border-secondary-200 dark:border-secondary-800;
+  :root {
+    --surface: 255 255 255;
+    --surface-dark: 15 23 42;
+    --muted: 148 163 184;
+    --text: 15 23 42;
+    --text-dark: 243 244 246;
+    --border: 226 232 240;
+    --border-dark: 51 65 85;
   }
-  
+
+  * {
+    border-color: rgb(var(--border));
+  }
+
   body {
-    @apply bg-white dark:bg-secondary-950 text-secondary-900 dark:text-secondary-100;
-    @apply transition-colors duration-200;
+    background-color: rgb(var(--surface));
+    color: rgb(var(--text));
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  :root.dark body {
+    background-color: rgb(var(--surface-dark));
+    color: rgb(var(--text-dark));
   }
 
   h1 {
@@ -23,36 +39,31 @@
   h3 {
     @apply text-2xl md:text-3xl font-semibold;
   }
+
+  :focus-visible {
+    outline: 2px solid rgba(59, 130, 246, 0.9);
+    outline-offset: 3px;
+  }
 }
 
 @layer components {
-  .btn {
-    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-200;
-    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  .container {
+    width: min(100%, 1200px);
+    margin-inline: auto;
+    padding-inline: 1rem;
   }
 
-  .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white;
-    @apply focus:ring-primary-500 shadow-md hover:shadow-lg;
-    @apply active:scale-95;
-  }
-
-  .btn-secondary {
-    @apply bg-secondary-200 dark:bg-secondary-800 hover:bg-secondary-300 dark:hover:bg-secondary-700;
-    @apply text-secondary-900 dark:text-secondary-100;
-    @apply focus:ring-secondary-500;
-  }
-
-  .btn-outline {
-    @apply border-2 border-primary-500 text-primary-500;
-    @apply hover:bg-primary-50 dark:hover:bg-primary-950;
-    @apply focus:ring-primary-500;
+  button,
+  .btn,
+  [role='button'] {
+    transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
   }
 
   .card {
     @apply bg-white dark:bg-secondary-900 rounded-2xl shadow-lg;
     @apply border border-secondary-200 dark:border-secondary-800;
     @apply transition-all duration-200;
+    @apply backdrop-blur-sm;
   }
 
   .card-hover {
@@ -84,5 +95,17 @@
 
   .glow-effect {
     @apply shadow-glow;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 }
