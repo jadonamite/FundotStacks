@@ -22,7 +22,7 @@ export function CreateCampaign() {
                 <div className="mb-8">
                     <h1 className="mb-4">Create a Campaign</h1>
                     <p className="text-lg text-secondary-600 dark:text-secondary-400">
-                        Launch your project and start raising funds on the Stacks blockchain
+                        Launch your project and start raising funds on Stacks with the FundotStacks v1 direct-to-creator flow.
                     </p>
                 </div>
 
@@ -41,8 +41,8 @@ export function CreateCampaign() {
                             <ul className="text-sm text-primary-800 dark:text-primary-200 space-y-1">
                                 <li>• Make sure you have a Stacks wallet connected</li>
                                 <li>• Your campaign will be immutable once created</li>
-                                <li>• Funds are held in the smart contract until goal is reached</li>
-                                <li>• If goal isn't met by deadline, backers can claim refunds</li>
+                                <li>• Backing sends STX directly to your wallet, not into contract custody</li>
+                                <li>• Refunds and milestone updates are coordinated manually in this v1 release</li>
                             </ul>
                         </div>
                     </div>
