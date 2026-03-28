@@ -32,7 +32,14 @@ export function FundingProgress({ raisedAmount, goalAmount, showDetails = true }
                 </div>
             )}
 
-            <div className="progress-bar h-4">
+            <div
+                className="progress-bar h-4"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(progress)}
+                aria-label="Funding progress"
+            >
                 <div
                     className={`progress-fill ${isFullyFunded ? 'glow-effect' : ''}`}
                     style={{ width: `${progress}%` }}
