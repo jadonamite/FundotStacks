@@ -10,6 +10,8 @@ import { useTransaction } from '../../hooks/useTransaction.js';
 import { useStacksAuth } from '../../hooks/useStacksAuth.js';
 import { createCampaign } from '../../api/contract-calls.js';
 import { useState } from 'react';
+import { LoadingSpinner } from '../common/LoadingSpinner.jsx';
+import { ErrorAlert } from '../common/ErrorAlert.jsx';
 
 const campaignSchema = z.object({
     title: z.string().min(10, 'Title must be at least 10 characters').max(100, 'Title must be less than 100 characters'),
@@ -44,6 +46,8 @@ export function CampaignForm({ onSuccess }) {
         }
     };
 
+    const isSubmitting = status === 'pending' || status === 'confirming';
+
     if (successTxId) {
         return (
             <div className="card p-8 text-center">
@@ -70,7 +74,7 @@ export function CampaignForm({ onSuccess }) {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" aria-busy={isSubmitting}>
             {/* Title */}
             <div>
                 <label className="block text-sm font-semibold mb-2">
@@ -81,6 +85,7 @@ export function CampaignForm({ onSuccess }) {
                     type="text"
                     placeholder="Enter your campaign title"
                     className="input"
+                    disabled={isSubmitting}
                 />
                 {errors.title && (
                     <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
@@ -97,6 +102,7 @@ export function CampaignForm({ onSuccess }) {
                     rows={4}
                     placeholder="Describe your campaign (minimum 50 characters)"
                     className="input resize-none"
+                    disabled={isSubmitting}
                 />
                 {errors.description && (
                     <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
@@ -114,6 +120,7 @@ export function CampaignForm({ onSuccess }) {
                     step="0.000001"
                     placeholder="Enter goal amount in STX"
                     className="input"
+                    disabled={isSubmitting}
                 />
                 {errors.goalAmount && (
                     <p className="text-red-500 text-sm mt-1">{errors.goalAmount.message}</p>
@@ -130,6 +137,7 @@ export function CampaignForm({ onSuccess }) {
                     type="number"
                     placeholder="Minimum 144 blocks (~24 hours)"
                     className="input"
+                    disabled={isSubmitting}
                 />
                 <p className="text-xs text-secondary-500 dark:text-secondary-400 mt-1">
                     ~10 minutes per block. 144 blocks ≈ 1 day, 1008 blocks ≈ 1 week
@@ -146,6 +154,7 @@ export function CampaignForm({ onSuccess }) {
                     type="checkbox"
                     id="milestones"
                     className="mt-1 w-5 h-5 text-primary-500 rounded focus:ring-primary-500"
+                    disabled={isSubmitting}
                 />
                 <label htmlFor="milestones" className="text-sm">
                     <span className="font-semibold block">Enable Milestone-Based Funding</span>
@@ -157,17 +166,16 @@ export function CampaignForm({ onSuccess }) {
 
             {/* Error Display */}
             {error && (
-                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
-                    <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
-                </div>
+                <ErrorAlert message={error} />
             )}
 
             {/* Submit Button */}
             <button
                 type="submit"
-                disabled={status === 'pending' || status === 'confirming'}
-                className="btn btn-primary w-full"
+                disabled={isSubmitting}
+                className="btn btn-primary w-full flex items-center justify-center gap-2"
             >
+                {isSubmitting && <LoadingSpinner size="sm" />}
                 {status === 'pending' && 'Awaiting Wallet...'}
                 {status === 'confirming' && 'Confirming on Blockchain...'}
                 {status === 'idle' && 'Create Campaign'}
