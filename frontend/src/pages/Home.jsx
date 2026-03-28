@@ -22,11 +22,17 @@ export function Home() {
                 <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="mb-6 text-gradient">
-                            Decentralized Crowdfunding on Bitcoin
+                        <div className="inline-flex items-center rounded-full border border-primary-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary-700 shadow-sm dark:border-primary-900 dark:bg-secondary-950/70 dark:text-primary-300">
+                            FundotStacks v1
+                        </div>
+                        <h1 className="mb-6 mt-6 text-gradient">
+                            Direct Crowdfunding on Stacks
                         </h1>
                         <p className="text-xl md:text-2xl text-secondary-600 dark:text-secondary-300 mb-8 max-w-2xl mx-auto">
-                            Launch campaigns, raise funds, and build the future with the security of Bitcoin through Stacks blockchain
+                            Launch campaigns, send STX straight to creators, and track campaign progress on-chain with the security of Bitcoin through Stacks.
+                        </p>
+                        <p className="text-sm md:text-base text-secondary-500 dark:text-secondary-400 mb-8 max-w-3xl mx-auto">
+                            Milestones, refunds, and reward NFTs are presented in this release as visible on-chain records for coordination, not automated fund custody.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link to="/create" className="btn btn-primary text-lg px-8 py-4">
@@ -148,9 +154,9 @@ export function Home() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                 </svg>
                             </div>
-                            <h3 className="text-lg font-bold mb-2">Smart Contracts</h3>
+                            <h3 className="text-lg font-bold mb-2">On-Chain Tracking</h3>
                             <p className="text-sm text-secondary-600 dark:text-secondary-400">
-                                Automated fund releases with Clarity smart contracts
+                                Campaigns, contributions, and status updates are recorded on-chain in Clarity.
                             </p>
                         </div>
 
@@ -160,9 +166,9 @@ export function Home() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                 </svg>
                             </div>
-                            <h3 className="text-lg font-bold mb-2">Milestone Funding</h3>
+                            <h3 className="text-lg font-bold mb-2">Milestone Visibility</h3>
                             <p className="text-sm text-secondary-600 dark:text-secondary-400">
-                                Release funds in stages as you hit project milestones
+                                Publish milestone progress for backers while creators keep direct custody of funds.
                             </p>
                         </div>
 
