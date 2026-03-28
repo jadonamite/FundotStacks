@@ -8,9 +8,10 @@ import { useCampaigns } from '../hooks/useCampaigns.js';
 import { useCampaignStore } from '../store/campaignStore.js';
 import { CampaignCard } from '../components/campaign/CampaignCard.jsx';
 import { CampaignSkeletonCard } from '../components/campaign/CampaignSkeletonCard.jsx';
+import { ErrorAlert } from '../components/common/ErrorAlert.jsx';
 
 export function ExploreCampaigns() {
-    const { isLoading } = useCampaigns();
+    const { isLoading, isError, refetch } = useCampaigns();
     const { filters, setFilters, getFilteredCampaigns } = useCampaignStore();
 
     const filteredCampaigns = getFilteredCampaigns();
@@ -66,6 +67,12 @@ export function ExploreCampaigns() {
                 </div>
 
                 {/* Campaign Grid */}
+                {isError && (
+                    <div className="mb-6">
+                        <ErrorAlert message="Unable to load campaigns right now. Hang tight!" onRetry={refetch} />
+                    </div>
+                )}
+
                 {isLoading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {Array.from({ length: 6 }, (_, index) => (

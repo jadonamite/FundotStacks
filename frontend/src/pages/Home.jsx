@@ -8,9 +8,10 @@ import { useCampaigns } from '../hooks/useCampaigns.js';
 import { CampaignCard } from '../components/campaign/CampaignCard.jsx';
 import { LoadingSpinner } from '../components/common/LoadingSpinner.jsx';
 import { CampaignSkeletonCard } from '../components/campaign/CampaignSkeletonCard.jsx';
+import { ErrorAlert } from '../components/common/ErrorAlert.jsx';
 
 export function Home() {
-    const { data: campaigns, isLoading } = useCampaigns();
+    const { data: campaigns, isLoading, isError, refetch } = useCampaigns();
 
     const featuredCampaigns = campaigns?.slice(0, 3) || [];
 
@@ -90,6 +91,12 @@ export function Home() {
                             </svg>
                         </Link>
                     </div>
+
+                    {isError && (
+                        <div className="mb-8">
+                            <ErrorAlert message="We couldn't load campaigns right now." onRetry={refetch} />
+                        </div>
+                    )}
 
                     {isLoading ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

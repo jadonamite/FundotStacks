@@ -18,7 +18,8 @@ export function useCampaigns() {
             return campaigns;
         },
         staleTime: 30000, // 30 seconds
-        refetchInterval: 60000 // Refresh every minute
+        refetchInterval: 60000, // Refresh every minute
+        retry: 2
     });
 }
 
