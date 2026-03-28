@@ -14,10 +14,7 @@ import {
     FungibleConditionCode
 } from '@stacks/transactions';
 import { getStacksNetwork } from './stacks-client.js';
-
-// Parse contract address from full identifier (e.g., "ST123.contract-name")
-const CAMPAIGN_CORE_FULL = import.meta.env.VITE_CAMPAIGN_CORE_ADDRESS || '';
-const [CONTRACT_ADDRESS, CAMPAIGN_CORE] = CAMPAIGN_CORE_FULL.split('.');
+import { CAMPAIGN_CORE } from './contract-config.js';
 
 /**
  * Create a new campaign
@@ -34,8 +31,8 @@ export async function createCampaign(campaignData, userAddress) {
     ];
 
     const txOptions = {
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CAMPAIGN_CORE,
+        contractAddress: CAMPAIGN_CORE.address,
+        contractName: CAMPAIGN_CORE.name,
         functionName: 'create-campaign',
         functionArgs,
         network: getStacksNetwork(),
@@ -75,8 +72,8 @@ export async function fundCampaign(campaignId, amount, userAddress) {
     ];
 
     const txOptions = {
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CAMPAIGN_CORE,
+        contractAddress: CAMPAIGN_CORE.address,
+        contractName: CAMPAIGN_CORE.name,
         functionName: 'fund-campaign',
         functionArgs,
         network: getStacksNetwork(),
@@ -103,8 +100,8 @@ export async function completeCampaign(campaignId) {
     ];
 
     const txOptions = {
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CAMPAIGN_CORE,
+        contractAddress: CAMPAIGN_CORE.address,
+        contractName: CAMPAIGN_CORE.name,
         functionName: 'complete-campaign',
         functionArgs,
         network: getStacksNetwork(),
@@ -131,8 +128,8 @@ export async function cancelCampaign(campaignId) {
     ];
 
     const txOptions = {
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CAMPAIGN_CORE,
+        contractAddress: CAMPAIGN_CORE.address,
+        contractName: CAMPAIGN_CORE.name,
         functionName: 'cancel-campaign',
         functionArgs,
         network: getStacksNetwork(),

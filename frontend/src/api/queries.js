@@ -5,10 +5,7 @@
 
 import { callReadOnlyFunction, cvToJSON, uintCV, principalCV } from '@stacks/transactions';
 import { getStacksNetwork, API_URL } from './stacks-client.js';
-
-// Parse contract address from full identifier (e.g., "ST123.contract-name")
-const CAMPAIGN_CORE_FULL = import.meta.env.VITE_CAMPAIGN_CORE_ADDRESS || '';
-const [CONTRACT_ADDRESS, CAMPAIGN_CORE] = CAMPAIGN_CORE_FULL.split('.');
+import { CAMPAIGN_CORE } from './contract-config.js';
 
 /**
  * Get campaign details by ID
@@ -16,12 +13,12 @@ const [CONTRACT_ADDRESS, CAMPAIGN_CORE] = CAMPAIGN_CORE_FULL.split('.');
 export async function getCampaignDetails(campaignId) {
     try {
         const result = await callReadOnlyFunction({
-            contractAddress: CONTRACT_ADDRESS,
-            contractName: CAMPAIGN_CORE,
+            contractAddress: CAMPAIGN_CORE.address,
+            contractName: CAMPAIGN_CORE.name,
             functionName: 'get-campaign',
             functionArgs: [uintCV(BigInt(campaignId))],
             network: getStacksNetwork(),
-            senderAddress: CONTRACT_ADDRESS
+            senderAddress: CAMPAIGN_CORE.address
         });
 
         const jsonResult = cvToJSON(result);
@@ -55,12 +52,12 @@ export async function getCampaignDetails(campaignId) {
 export async function getContribution(campaignId, backerAddress) {
     try {
         const result = await callReadOnlyFunction({
-            contractAddress: CONTRACT_ADDRESS,
-            contractName: CAMPAIGN_CORE,
+            contractAddress: CAMPAIGN_CORE.address,
+            contractName: CAMPAIGN_CORE.name,
             functionName: 'get-contribution',
             functionArgs: [uintCV(BigInt(campaignId)), principalCV(backerAddress)],
             network: getStacksNetwork(),
-            senderAddress: CONTRACT_ADDRESS
+            senderAddress: CAMPAIGN_CORE.address
         });
 
         const jsonResult = cvToJSON(result);
@@ -86,12 +83,12 @@ export async function getContribution(campaignId, backerAddress) {
 export async function getTotalCampaigns() {
     try {
         const result = await callReadOnlyFunction({
-            contractAddress: CONTRACT_ADDRESS,
-            contractName: CAMPAIGN_CORE,
+            contractAddress: CAMPAIGN_CORE.address,
+            contractName: CAMPAIGN_CORE.name,
             functionName: 'get-campaign-count',
             functionArgs: [],
             network: getStacksNetwork(),
-            senderAddress: CONTRACT_ADDRESS
+            senderAddress: CAMPAIGN_CORE.address
         });
 
         const jsonResult = cvToJSON(result);
@@ -127,5 +124,3 @@ export async function getAllCampaigns() {
         throw error;
     }
 }
-
-
