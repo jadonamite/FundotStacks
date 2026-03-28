@@ -5,7 +5,6 @@
 
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState } from 'react';
 import { ErrorBoundary } from './components/common/ErrorBoundary.jsx';
 import { ConnectButton } from './components/wallet/ConnectButton.jsx';
 import { Home } from './pages/Home.jsx';
@@ -14,6 +13,7 @@ import { CreateCampaign } from './pages/CreateCampaign.jsx';
 import { CampaignDetail } from './pages/CampaignDetail.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
 import { Profile } from './pages/Profile.jsx';
+import { useTheme } from './hooks/useTheme.js';
 import './styles/globals.css';
 
 // Initialize Reown AppKit for Bitcoin wallet support
@@ -22,12 +22,7 @@ import './config/reown.js';
 const queryClient = new QueryClient();
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
-
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
-  };
+  const { isDark, toggleTheme } = useTheme();
 
   return (
     <ErrorBoundary>
