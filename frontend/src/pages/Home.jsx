@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useCampaigns } from '../hooks/useCampaigns.js';
 import { CampaignCard } from '../components/campaign/CampaignCard.jsx';
 import { LoadingSpinner } from '../components/common/LoadingSpinner.jsx';
+import { CampaignSkeletonCard } from '../components/campaign/CampaignSkeletonCard.jsx';
 
 export function Home() {
     const { data: campaigns, isLoading } = useCampaigns();
@@ -91,8 +92,10 @@ export function Home() {
                     </div>
 
                     {isLoading ? (
-                        <div className="py-16">
-                            <LoadingSpinner size="lg" text="Loading campaigns..." />
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {Array.from({ length: 6 }, (_, index) => (
+                                <CampaignSkeletonCard key={`skeleton-${index}`} />
+                            ))}
                         </div>
                     ) : featuredCampaigns.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

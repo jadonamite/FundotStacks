@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useCampaigns } from '../hooks/useCampaigns.js';
 import { useCampaignStore } from '../store/campaignStore.js';
 import { CampaignCard } from '../components/campaign/CampaignCard.jsx';
-import { LoadingSpinner } from '../components/common/LoadingSpinner.jsx';
+import { CampaignSkeletonCard } from '../components/campaign/CampaignSkeletonCard.jsx';
 
 export function ExploreCampaigns() {
     const { isLoading } = useCampaigns();
@@ -67,8 +67,10 @@ export function ExploreCampaigns() {
 
                 {/* Campaign Grid */}
                 {isLoading ? (
-                    <div className="py-16">
-                        <LoadingSpinner size="lg" text="Loading campaigns..." />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {Array.from({ length: 6 }, (_, index) => (
+                            <CampaignSkeletonCard key={`explore-skeleton-${index}`} />
+                        ))}
                     </div>
                 ) : filteredCampaigns.length > 0 ? (
                     <>
