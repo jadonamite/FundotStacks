@@ -5,25 +5,25 @@
 
 ## 🚀 Overview
 
-**FundotStacks** is a decentralized crowdfunding platform built on the Stacks blockchain, enabling creators to launch campaigns and receive funding in STX tokens through trustless smart contracts. All transactions are secured by Bitcoin's Proof of Work through Stacks' Proof of Transfer consensus.
+**FundotStacks v1** is a decentralized crowdfunding platform built on the Stacks blockchain, enabling creators to launch campaigns and receive funding in STX tokens through a no-custody direct-transfer flow. All transactions are secured by Bitcoin's Proof of Work through Stacks' Proof of Transfer consensus.
 
 ### Key Features
 
 - ✅ **Bitcoin-Secured**: All transactions anchored to Bitcoin for maximum security
-- 🎯 **Smart Contract Automation**: Trustless fund management with Clarity contracts
-- 📊 **Milestone-Based Funding**: Release funds in stages as you hit project milestones
+- 🎯 **On-Chain Campaign Tracking**: Campaign state and contributions are recorded with Clarity contracts
+- 📊 **Milestone Visibility**: Campaigns can publish milestone progress on-chain for backers
 - 💰 **Zero Platform Fees**: No middleman, only blockchain transaction costs
-- 🔄 **Automatic Refunds**: Failed campaigns automatically trigger refunds to backers
-- 🎨 **NFT Rewards**: Backers receive proof-of-support NFTs
+- 🔄 **Refund Ledger**: Refunds can be logged on-chain after creators coordinate them manually
+- 🎨 **NFT Reward Records**: Backers can be linked to proof-of-support NFTs
 
 ## 🏗️ Architecture
 
 ### Smart Contracts (Clarity 4)
 
 - **campaign-core.clar**: Main campaign lifecycle management
-- **milestone-manager.clar**: Milestone-based fund releases
-- **refund-handler.clar**: Automatic refund processing
-- **nft-rewards.clar**: SIP-009 NFT rewards for backers
+- **milestone-manager.clar**: Milestone progress tracking
+- **refund-handler.clar**: Refund status ledger
+- **nft-rewards.clar**: SIP-009 proof-of-support reward records
 
 ### Frontend (React + Vite)
 
