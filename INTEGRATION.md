@@ -22,11 +22,11 @@ VITE_REFUND_HANDLER_ADDRESS=ST31DP8F8CF2GXSZBHHHK5J6Y061744E1TP7FRGHT.refund-han
 
 ## 2. Key Architecture Changes
 
-### No-Custody Model
-The Clarity 4 contracts use a **direct transfer** architecture:
+### FundotStacks v1 No-Custody Model
+The current contracts use a **direct transfer** architecture:
 
 - ✅ Backers send STX **directly to campaign creators**
-- ✅ Contracts only **track state** (no custody of funds)
+- ✅ Contracts primarily **track state** (no custody of funds)
 - ✅ `complete-campaign` replaces `finalize-campaign` (just marks as complete)
 
 ### Updated Functions
@@ -62,7 +62,8 @@ npm run dev
 
 - **Funds Transfer**: When backing a campaign, STX transfers **directly to the creator's address**, not to the contract
 - **Refunds**: If campaign fails, creator must **manually refund** backers (contract only tracks refund status)
-- **Milestones**: Informational only - funds already with creator
+- **Milestones**: Informational only in v1 - funds already with creator
+- **NFT Rewards**: Optional proof-of-support records, not part of the funding path
 
 ## 4. Frontend Code Updates Made
 
