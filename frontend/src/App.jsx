@@ -47,9 +47,14 @@ function App() {
                       alt="FundotStacks"
                       className="w-10 h-10 md:w-12 md:h-12 object-contain transition-transform group-hover:scale-110"
                     />
-                    <span className="text-xl md:text-2xl font-bold text-gradient hidden sm:inline">
-                      FundotStacks
-                    </span>
+                    <div className="hidden sm:flex flex-col leading-tight">
+                      <span className="text-xl md:text-2xl font-bold text-gradient">
+                        FundotStacks
+                      </span>
+                      <span className="text-[11px] uppercase tracking-[0.24em] text-secondary-500 dark:text-secondary-400">
+                        v1 no-custody
+                      </span>
+                    </div>
                   </Link>
 
                   {/* Desktop Navigation */}
@@ -148,7 +153,12 @@ function App() {
                           alt="FundotStacks"
                           className="w-10 h-10 object-contain"
                         />
-                        <span className="text-lg font-bold text-gradient">FundotStacks</span>
+                        <div className="flex flex-col leading-tight">
+                          <span className="text-lg font-bold text-gradient">FundotStacks</span>
+                          <span className="text-[10px] uppercase tracking-[0.2em] text-secondary-500 dark:text-secondary-400">
+                            v1 no-custody
+                          </span>
+                        </div>
                       </Link>
                       <button
                         onClick={closeMobileNav}
@@ -208,10 +218,15 @@ function App() {
                         alt="FundotStacks"
                         className="w-10 h-10 object-contain"
                       />
-                      <span className="text-xl font-bold text-gradient">FundotStacks</span>
+                      <div className="flex flex-col leading-tight">
+                        <span className="text-xl font-bold text-gradient">FundotStacks</span>
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-secondary-500 dark:text-secondary-400">
+                          v1 no-custody
+                        </span>
+                      </div>
                     </div>
                     <p className="text-sm text-secondary-600 dark:text-secondary-400">
-                      Decentralized crowdfunding secured by Bitcoin through Stacks blockchain.
+                      Direct-to-creator crowdfunding on Stacks with on-chain campaign tracking for FundotStacks v1.
                     </p>
                   </div>
                   <div>
