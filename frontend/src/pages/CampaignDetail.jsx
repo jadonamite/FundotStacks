@@ -5,12 +5,17 @@
 
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { useCampaignDetails } from '../hooks/useCampaigns.js';
+import { useCampaignDetails, useContribution } from '../hooks/useCampaigns.js';
 import { useStacksAuth } from '../hooks/useStacksAuth.js';
 import { useTransaction } from '../hooks/useTransaction.js';
+import { useCampaignMilestones } from '../hooks/useCampaignMilestones.js';
 import { fundCampaign } from '../api/contract-calls.js';
 import { FundingProgress } from '../components/campaign/FundingProgress.jsx';
 import { LoadingSpinner } from '../components/common/LoadingSpinner.jsx';
+import { RewardStatus } from '../components/campaign/RewardStatus.jsx';
+import { RefundStatus } from '../components/campaign/RefundStatus.jsx';
+import { MilestoneTracker } from '../components/campaign/MilestoneTracker.jsx';
+import { ErrorAlert } from '../components/common/ErrorAlert.jsx';
 import { formatSTX, truncateAddress, getStatusLabel, getStatusColor } from '../utils/helpers.js';
 
 export function CampaignDetail() {
@@ -19,6 +24,9 @@ export function CampaignDetail() {
     const { isAuthenticated, stxAddress } = useStacksAuth();
     const { submitTransaction, status, error } = useTransaction();
     const [fundAmount, setFundAmount] = useState('');
+    const campaignId = Number(id);
+    const { data: milestones, isLoading: isMilestonesLoading, isError: milestoneError, refetch: refetchMilestones } = useCampaignMilestones(campaignId);
+    const { data: contribution } = useContribution(campaignId, stxAddress);
 
     const handleFund = async (e) => {
         e.preventDefault();
@@ -148,10 +156,14 @@ export function CampaignDetail() {
                     <div className="lg:col-span-1">
                         <div className="card p-6 sticky top-8 space-y-6">
                             {/* Funding Progress */}
-                            <FundingProgress
-                                raisedAmount={campaign.raisedAmount}
-                                goalAmount={campaign.goalAmount}
-                            />
+                        <FundingProgress
+                            raisedAmount={campaign.raisedAmount}
+                            goalAmount={campaign.goalAmount}
+                        />
+                        <RewardStatus
+                            campaignId={campaign.id}
+                            stxAddress={stxAddress}
+                        />
 
                             {/* Funding Form */}
                             {isActive && (
@@ -203,11 +215,19 @@ export function CampaignDetail() {
                                                 </button>
                                             </div>
                                         )}
-                                    </div>
-                                </>
-                            )}
+                                            </div>
+                                        </>
+                                    )}
 
-                            {!isActive && (
+                                    {contribution && (
+                                        <RefundStatus
+                                            campaignId={campaign.id}
+                                            backerAddress={stxAddress}
+                                            contributionAmount={contribution.amount}
+                                        />
+                                    )}
+
+                                    {!isActive && (
                                 <div className="text-center py-6 bg-secondary-50 dark:bg-secondary-900 rounded-xl">
                                     <p className="text-secondary-600 dark:text-secondary-400 font-semibold">
                                         This campaign is no longer accepting funds
@@ -218,6 +238,37 @@ export function CampaignDetail() {
                     </div>
                 </div>
             </div>
+
+            {campaign.milestonesEnabled && (
+                <section className="mt-8">
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-xl font-bold">Milestone Progress</h2>
+                        <span className="text-sm text-secondary-500 dark:text-secondary-400">
+                            Managed by the Milestone Manager contract
+                        </span>
+                    </div>
+
+                    {milestoneError && (
+                        <div className="mb-4">
+                            <ErrorAlert
+                                message="Unable to load milestone progress."
+                                onRetry={refetchMilestones}
+                            />
+                        </div>
+                    )}
+
+                    {isMilestonesLoading ? (
+                        <div className="py-6">
+                            <LoadingSpinner size="lg" text="Loading milestones..." />
+                        </div>
+                    ) : (
+                        <MilestoneTracker
+                            campaignId={campaign.id}
+                            milestones={milestones}
+                        />
+                    )}
+                </section>
+            )}
         </div>
     );
 }
