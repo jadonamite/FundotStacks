@@ -36,7 +36,7 @@ export function RefundStatus({ campaignId, backerAddress, contributionAmount }) 
                 </p>
             ) : (
                 <p>
-                    No refund has been processed yet. If this campaign misses its goal you can request a refund and the Refund Handler contract will mark it as processed for you.
+                    No refund has been logged yet. In FundotStacks v1, creators coordinate refunds manually and this contract acts as a visible ledger once a refund is recorded.
                 </p>
             )}
             <p className="text-xs italic">
