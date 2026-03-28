@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { CampaignCard } from '../components/campaign/CampaignCard.jsx';
 import { WalletDisplay } from '../components/wallet/WalletDisplay.jsx';
 import { LoadingSpinner } from '../components/common/LoadingSpinner.jsx';
+import { CampaignSkeletonCard } from '../components/campaign/CampaignSkeletonCard.jsx';
 
 export function Dashboard() {
     const { isAuthenticated, stxAddress } = useStacksAuth();
@@ -58,11 +59,13 @@ export function Dashboard() {
                                 </Link>
                             </div>
 
-                            {isLoading ? (
-                                <div className="py-12">
-                                    <LoadingSpinner size="lg" text="Loading your campaigns..." />
-                                </div>
-                            ) : myCampaigns.length > 0 ? (
+                        {isLoading ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {Array.from({ length: 4 }, (_, index) => (
+                                    <CampaignSkeletonCard key={`dashboard-my-skeleton-${index}`} />
+                                ))}
+                            </div>
+                        ) : myCampaigns.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {myCampaigns.map((campaign) => (
                                         <CampaignCard key={campaign.id} campaign={campaign} />
@@ -89,6 +92,12 @@ export function Dashboard() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {backedCampaigns.map((campaign) => (
                                         <CampaignCard key={campaign.id} campaign={campaign} />
+                                    ))}
+                                </div>
+                            ) : isLoading ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {Array.from({ length: 2 }, (_, index) => (
+                                        <CampaignSkeletonCard key={`dashboard-backed-skeleton-${index}`} />
                                     ))}
                                 </div>
                             ) : (
