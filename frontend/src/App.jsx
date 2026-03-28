@@ -14,6 +14,7 @@ import { CampaignDetail } from './pages/CampaignDetail.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
 import { Profile } from './pages/Profile.jsx';
 import { useTheme } from './hooks/useTheme.js';
+import { useState } from 'react';
 import './styles/globals.css';
 
 // Initialize Reown AppKit for Bitcoin wallet support
@@ -23,6 +24,9 @@ const queryClient = new QueryClient();
 
 function App() {
   const { isDark, toggleTheme } = useTheme();
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const closeMobileNav = () => setMobileNavOpen(false);
 
   return (
     <ErrorBoundary>
@@ -91,6 +95,17 @@ function App() {
 
                     {/* Connect Button */}
                     <ConnectButton />
+                    <button
+                      type="button"
+                      onClick={() => setMobileNavOpen(true)}
+                      className="md:hidden p-2 rounded-xl bg-primary-500 text-white hover:bg-primary-600 transition-colors"
+                      aria-label="Open navigation menu"
+                    >
+                      <span className="sr-only">Open navigation menu</span>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -118,6 +133,56 @@ function App() {
                   </Link>
                 </div>
               </div>
+              {mobileNavOpen && (
+                <div className="fixed inset-0 z-50">
+                  <div
+                    className="absolute inset-0 bg-black/30"
+                    aria-hidden="true"
+                    onClick={closeMobileNav}
+                  />
+                  <div className="relative bg-white dark:bg-secondary-900 h-full w-full p-6 overflow-y-auto">
+                    <div className="flex items-center justify-between mb-6">
+                      <Link to="/" className="flex items-center gap-3" onClick={closeMobileNav}>
+                        <img
+                          src="/logo.png"
+                          alt="FundotStacks"
+                          className="w-10 h-10 object-contain"
+                        />
+                        <span className="text-lg font-bold text-gradient">FundotStacks</span>
+                      </Link>
+                      <button
+                        onClick={closeMobileNav}
+                        className="p-2 rounded-full bg-secondary-200 dark:bg-secondary-800"
+                        aria-label="Close navigation"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <nav className="space-y-4 text-lg text-secondary-700 dark:text-secondary-300">
+                      <Link to="/explore" onClick={closeMobileNav} className="block font-semibold">
+                        Explore
+                      </Link>
+                      <Link to="/create" onClick={closeMobileNav} className="block font-semibold">
+                        Create
+                      </Link>
+                      <Link to="/dashboard" onClick={closeMobileNav} className="block font-semibold">
+                        Dashboard
+                      </Link>
+                    </nav>
+                    <div className="mt-8 space-y-3">
+                      <button
+                        onClick={() => {
+                          toggleTheme();
+                        }}
+                        className="w-full btn btn-outline"
+                      >
+                        Toggle Theme
+                      </button>
+                      <ConnectButton />
+                    </div>
+                  </div>
+                </div>
+              )}
             </nav>
 
             {/* Main Content */}
