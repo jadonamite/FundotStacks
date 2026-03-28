@@ -157,9 +157,9 @@ export function CampaignForm({ onSuccess }) {
                     disabled={isSubmitting}
                 />
                 <label htmlFor="milestones" className="text-sm">
-                    <span className="font-semibold block">Enable Milestone-Based Funding</span>
+                    <span className="font-semibold block">Enable Milestone Tracking</span>
                     <span className="text-secondary-600 dark:text-secondary-400">
-                        Release funds in stages as you complete project milestones
+                        Show milestone progress on-chain for supporters in the FundotStacks v1 no-custody flow
                     </span>
                 </label>
             </div>
